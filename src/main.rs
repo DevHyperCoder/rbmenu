@@ -1,3 +1,5 @@
+use rbmenu::run;
+
 fn main() {
-    println!("RBMenu");
+    run();
 }
