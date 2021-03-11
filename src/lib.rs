@@ -1,10 +1,12 @@
 mod commands;
 mod config;
+mod data;
 mod parser;
 
-use config::Config;
-
 use commands::{insert, list, view};
+use config::Config;
+use data::read_data_file;
+
 use std::io::stdin;
 use structopt::StructOpt;
 
@@ -16,12 +18,14 @@ pub fn run() {
 
     input_url = input_url.trim().to_owned();
 
+    let data = read_data_file();
+
     // Run based on options
     if opts.insert {
-        insert(input_url, opts);
+        insert(input_url, data, opts);
     } else if opts.list {
-        list(input_url, opts);
+        list(input_url, data, opts);
     } else if opts.view {
-        view(input_url, opts);
+        view(input_url, data, opts);
     }
 }
