@@ -17,4 +17,8 @@ pub struct Config {
     ///Add verbosity to output
     #[structopt(long)]
     pub verbose: bool,
+
+    ///Name of bookmark ; Required for -i or -v
+    #[structopt(short, long)]
+    pub name: Option<String>,
 }
