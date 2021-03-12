@@ -45,8 +45,8 @@ pub fn list(input: String, data: Data, _config: Config) {
     print_bookmark(&search_results);
 }
 
-fn print_bookmark(input: &Vec<Bookmark>){
-    for i in input{
-        println!("{}",i);
+fn print_bookmark(input: &Vec<Bookmark>) {
+    for i in input {
+        println!("{}", i);
     }
 }
