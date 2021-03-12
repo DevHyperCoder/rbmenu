@@ -6,10 +6,6 @@ pub struct Config {
     #[structopt(short)]
     pub insert: bool,
 
-    ///View  bookmark.
-    #[structopt(short)]
-    pub view: bool,
-
     ///List all  bookmarks.
     #[structopt(short)]
     pub list: bool,

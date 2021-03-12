@@ -1,6 +1,7 @@
 use home::home_dir;
 use serde::{Deserialize, Serialize};
 use std::fs;
+use std::fmt;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Bookmark {
@@ -9,10 +10,17 @@ pub struct Bookmark {
     pub name: String,
 }
 
+impl fmt::Display for Bookmark {
+    fn fmt(&self,f: &mut fmt::Formatter) -> fmt::Result{
+        write!(f,"{} {}",self.name,self.link)
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Data {
     pub bookmarks: Vec<Bookmark>,
 }
+
 
 pub fn create_data_file() {
     let data_dir = home_dir().unwrap().join(".local/share/rbmenu/");

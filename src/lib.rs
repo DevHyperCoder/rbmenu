@@ -3,7 +3,7 @@ mod config;
 mod data;
 mod parser;
 
-use commands::{insert, list, view};
+use commands::{insert, list};
 use config::Config;
 use data::read_data_file;
 
@@ -25,7 +25,5 @@ pub fn run() {
         insert(input_url, data, opts);
     } else if opts.list {
         list(input_url, data, opts);
-    } else if opts.view {
-        view(input_url, data, opts);
     }
 }
