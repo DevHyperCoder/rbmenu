@@ -9,17 +9,14 @@ pub fn insert(input: String, mut data: Data, config: Config) {
         None => "".to_owned(),
         Some(i) => i,
     };
+
     let bookmark = Bookmark {
         is_file: !is_url(&input),
         link: input,
         name: name,
     };
-    let json = serde_json::to_string(&bookmark);
-    println!("{}", json.unwrap());
 
     data.bookmarks.push(bookmark);
-    let json = serde_json::to_string_pretty(&data);
-    println!("{}", json.unwrap());
 
     fs::write(
         get_data_file_path(),
