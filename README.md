@@ -37,9 +37,9 @@ Yes, more features are on the way. Some planned ones are, copy to clipboard, mod
 
 **List bookmarks**
 
-Without any options, `rbmenu` displays all the available bookmarks. Pipe regex string into `stdin`
+Without the name option, `rbmenu -l` displays all the available bookmarks. Give a regex string to the `-n` flag to filter out the bookmarks
 
-`echo "git*" | rbmenu -l` 
+`rbmenu -ln "git*"` 
 
 ## License
 
