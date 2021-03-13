@@ -12,18 +12,17 @@ use structopt::StructOpt;
 
 pub fn run() {
     let opts = Config::from_args();
-
-    let mut input_url = String::new();
-    stdin().read_line(&mut input_url).unwrap();
-
-    input_url = input_url.trim().to_owned();
-
     let data = read_data_file();
 
     // Run based on options
     if opts.insert {
+        // Read from stdin
+        let mut input_url = String::new();
+        stdin().read_line(&mut input_url).unwrap();
+        input_url = input_url.trim().to_owned();
+        
         insert(input_url, data, opts);
     } else if opts.list {
-        list(input_url, data, opts);
+        list(data, opts);
     }
 }

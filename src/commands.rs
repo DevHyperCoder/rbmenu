@@ -6,10 +6,7 @@ use regex::Regex;
 use std::fs;
 
 pub fn insert(input: String, mut data: Data, config: Config) {
-    let name = match config.name {
-        None => "".to_owned(),
-        Some(i) => i,
-    };
+    let name = config.name.unwrap_or("".to_owned());
 
     let bookmark = Bookmark {
         is_file: !is_url(&input),
@@ -26,9 +23,11 @@ pub fn insert(input: String, mut data: Data, config: Config) {
     .unwrap();
 }
 
-pub fn list(input: String, data: Data, _config: Config) {
+pub fn list(data: Data, config: Config) {
+    let name = config.name.unwrap_or("".to_owned());
+
     // No input
-    if input.len() == 0 {
+    if name.len() == 0 {
         print_bookmark(&data.bookmarks);
         return;
     }
@@ -37,7 +36,7 @@ pub fn list(input: String, data: Data, _config: Config) {
 
     // Match Regex
     for i in data.bookmarks {
-        if Regex::new(&input).unwrap().is_match(&i.name) {
+        if Regex::new(&name).unwrap().is_match(&i.name) {
             search_results.push(i);
         }
     }
