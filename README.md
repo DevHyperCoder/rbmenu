@@ -16,6 +16,18 @@ The Bookmark file is stored in `json` format.
 **More features ?**
 Yes, more features are on the way. Some planned ones are, copy to clipboard, modify bookmarks and so on.
 
+## Installation
+`rbmenu` is available on [crates.io](https://crates.io/crates/rbmenu)
+
+**Arch Linux** : Available on AUR, `rbmenu` for manual compilation from release and `rbmenu-bin` for precompiled binary
+
+**Manual Installation**
+- Install the rust toolchain. `cargo` should be on the `$PATH`
+- Clone the repo: `git clone https://github.com/DevHyperCoder/rbmenu.git`. Change directory (`cd`) into the `rbmenu` folder
+- Build the code: `cargo build --release`
+- Copy the binary to a location on $PATH. Binary is in `./target/release/rbmenu`
+- For operation with cargo, `cargo run -- <options>`.
+
 ## CLI - Options
 
 | Option / Flags   | Description                |
