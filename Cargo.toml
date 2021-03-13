@@ -3,6 +3,10 @@ name = "rbmenu"
 version = "0.1.0"
 authors = ["DevHyperCoder <arduinoleo88@gmail.com>"]
 edition = "2018"
+description = "Rust Bookmark (d)Menu"
+readme = "README.md"
+repository = "https://github.com/DevHyperCoder/rbmenu"
+license = "GPL-3.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
