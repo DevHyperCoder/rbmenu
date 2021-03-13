@@ -1,0 +1,59 @@
+.TH RBMENU 1 rbmenu\-0.1.0
+.SH NAME
+rbmenu \- Rust Bookmark (d)Menu
+.SH SYNOPSIS
+.B rbmenu
+.RB [ \-i
+.IR insert ]
+.RB [ \-n
+.IR name ]
+.RB [ \-l
+.IR list ]
+.SH DESCRIPTION
+.B rbmenu 
+is a bookmark menu written in rust. It stores the bookmarks in json format.
+.SH OPTIONS
+.TP
+.B \-V
+Print version information
+.TP
+.B \-h, \-\-help
+Print help information
+.TP
+.B \-i
+Insert a new bookmark. Reads stdin for the link and uses the value of
+.B \-n
+for name of the bookmark.
+.TP
+.B \-l
+Lists all bookmarks available. If value of
+.B \-n
+is not provided, all bookmarks are shown. Value of
+.B \-n
+can be a regular expression to match against the bookmarks
+.TP
+.B \-n
+Name of the bookmark. Required for
+.B \-i 
+Optional argument to
+.B \-l
+for regex matching.
+.SH USAGE
+.TP
+.B echo 'https://github.com' | rbmenu -in 'github'
+Adds a bookmark with name 
+.IR github
+and link
+.IR https://github.com
+.TP 
+.B rbmenu -l 
+Displays all the bookmarks saved in a "space" seperated value.
+.TP
+.B rbmenu -ln 'git*'
+Displays all the bookmarks that match the given regular expression pattern.
+.SH FILES
+.TP
+.B ~/.local/share/rbmenu/bookmark.json
+All bookmarks are stored here. Directory will be created if it does not exist.
+.SH AUTHORS
+DevHyperCoder <arduinoleo88@gmail.com>
