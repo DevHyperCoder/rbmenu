@@ -20,7 +20,7 @@ pub fn run() {
         let mut input_url = String::new();
         stdin().read_line(&mut input_url).unwrap();
         input_url = input_url.trim().to_owned();
-        
+
         insert(input_url, data, opts);
     } else if opts.list {
         list(data, opts);

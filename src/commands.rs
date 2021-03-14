@@ -2,13 +2,13 @@ use super::config::Config;
 use super::data::get_data_file_path;
 use super::data::{Bookmark, Data};
 use super::parser::is_url;
+use chrono::prelude::Local;
 use regex::Regex;
 use std::fs;
-use chrono::prelude::Local;
 
 pub fn insert(input: String, mut data: Data, config: Config) {
-    let name = config.name.unwrap_or("".to_owned());
-
+    let mut name = config.name.unwrap_or("".to_owned());
+    name = name.replace(' ', "_");
     let bookmark = Bookmark {
         is_file: !is_url(&input),
         link: input,
