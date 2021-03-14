@@ -14,7 +14,7 @@ pub struct Config {
     #[structopt(long)]
     pub verbose: bool,
 
-    ///Name of bookmark ; Required for -i or -v
+    ///Name of bookmark ; Required for -i or -l
     #[structopt(short, long)]
     pub name: Option<String>,
 }
