@@ -4,6 +4,7 @@ use super::data::{Bookmark, Data};
 use super::parser::is_url;
 use regex::Regex;
 use std::fs;
+use chrono::prelude::Local;
 
 pub fn insert(input: String, mut data: Data, config: Config) {
     let name = config.name.unwrap_or("".to_owned());
@@ -12,6 +13,7 @@ pub fn insert(input: String, mut data: Data, config: Config) {
         is_file: !is_url(&input),
         link: input,
         name: name,
+        date: Local::now().to_string(),
     };
 
     data.bookmarks.push(bookmark);

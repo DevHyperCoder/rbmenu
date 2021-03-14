@@ -8,6 +8,7 @@ pub struct Bookmark {
     pub is_file: bool,
     pub link: String,
     pub name: String,
+    pub date: String,
 }
 
 impl fmt::Display for Bookmark {
