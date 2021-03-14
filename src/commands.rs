@@ -22,20 +22,22 @@ fn generate_name(link: &String, config: Config) -> String {
     return name;
 }
 
-fn generate_bookmark(link: String, name: String) -> Bookmark {
+fn generate_bookmark(id:u32,link: String, name: String) -> Bookmark {
     Bookmark {
         is_file: !is_url(&link),
         link: link,
         name: name,
         date: Local::now().to_string(),
+        id: id,
     }
 }
 
 pub fn insert(input: String, mut data: Data, config: Config) {
     let name = generate_name(&input, config);
 
-    let bookmark = generate_bookmark(input, name);
+    let bookmark = generate_bookmark(data.last_id+1, input, name);
     data.bookmarks.push(bookmark);
+    data.last_id += 1;
 
     fs::write(
         get_data_file_path(),

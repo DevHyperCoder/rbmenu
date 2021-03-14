@@ -9,17 +9,19 @@ pub struct Bookmark {
     pub link: String,
     pub name: String,
     pub date: String,
+    pub id: u32,
 }
 
 impl fmt::Display for Bookmark {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{} {}", self.name, self.link)
+        write!(f, "{} {} {}", self.id, self.name, self.link)
     }
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Data {
     pub bookmarks: Vec<Bookmark>,
+    pub last_id: u32,
 }
 
 pub fn create_data_file() {
@@ -34,7 +36,7 @@ pub fn create_data_file() {
         fs::File::create(&data_file).unwrap();
     }
 
-    let data = Data { bookmarks: vec![] };
+    let data = Data { bookmarks: vec![] ,last_id: 0};
 
     fs::write(data_file, serde_json::to_string_pretty(&data).unwrap()).unwrap();
 }
