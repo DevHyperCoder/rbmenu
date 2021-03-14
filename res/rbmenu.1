@@ -23,7 +23,9 @@ Print help information
 .B \-i
 Insert a new bookmark. Reads stdin for the link and uses the value of
 .B \-n
-for name of the bookmark.
+(if available) for name of the bookmark. If 
+.B \-n
+is not available, then the name is parsed from the URL using a regular expressions.
 .TP
 .B \-l
 Lists all bookmarks available. If value of
@@ -37,7 +39,7 @@ Name of the bookmark. Required for
 .B \-i 
 Optional argument to
 .B \-l
-for regex matching.
+for regex matching. If the value contains spaces, it is converted to underscores. 
 .SH USAGE
 .TP
 .B echo 'https://github.com' | rbmenu -in 'github'
@@ -47,7 +49,7 @@ and link
 .IR https://github.com
 .TP 
 .B rbmenu -l 
-Displays all the bookmarks saved in a "space" seperated value.
+Displays all the bookmarks saved in a "space" seperated value. This allows for easy scripting using awk, sed etc. Names are in underscores always.
 .TP
 .B rbmenu -ln 'git*'
 Displays all the bookmarks that match the given regular expression pattern.
