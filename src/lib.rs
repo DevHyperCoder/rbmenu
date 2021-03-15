@@ -10,6 +10,7 @@ use data::read_data_file;
 use std::io::stdin;
 use structopt::StructOpt;
 
+/// Call command functions based on given options
 pub fn run() {
     let opts = Config::from_args();
     let data = read_data_file();
