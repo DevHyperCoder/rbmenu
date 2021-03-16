@@ -4,7 +4,7 @@ Rust Bookmark (d)Menu is a dmenu/ncurses based interface to manage bookmarks ind
 
 ## Features
 - Insert Bookmark
-- List Bookmark(s)
+- List Bookmark(s) \[With coloured output]
 
 ## FAQ
 **Location of Bookmark file ?**

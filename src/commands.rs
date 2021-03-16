@@ -39,9 +39,9 @@ pub fn list(data: Data, config: Config) {
     print_bookmark(&search_results);
 }
 
-/// Print all bookmarks in the vector
+/// Print all bookmarks in the vector (in color)
 fn print_bookmark(input: &Vec<Bookmark>) {
     for i in input {
-        println!("{}", i);
+        i.colored_fmt();
     }
 }

@@ -1,11 +1,12 @@
+use chrono::prelude::Local;
+use colored::*;
 use home::home_dir;
 use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::fs;
 use substring::Substring;
-use chrono::prelude::Local;
 
-use super::parser::{is_url,get_domain_name};
+use super::parser::{get_domain_name, is_url};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Bookmark {
@@ -44,6 +45,19 @@ impl Bookmark {
             date: Local::now().to_string(),
             id: id,
         }
+    }
+
+    /// Print a coloured output
+    /// id -> yellow bold
+    /// name -> cyan bold
+    /// link -> blue
+    pub fn colored_fmt(&self) {
+        println!(
+            "{} {} {}",
+            self.id.to_string().yellow().bold(),
+            self.name.cyan().bold(),
+            self.link.blue()
+        );
     }
 }
 
