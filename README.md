@@ -42,7 +42,7 @@ Yes, more features are on the way. Some planned ones are, copy to clipboard, mod
 **Insert a new bookmark**
 
 `rbmenu` reads from `stdin`, therefore, you are able to pipe text into it.
-`-n` is the name of the bookmark.
+`-n` is the name of the bookmark. (Not required as if not provided, the domain name is used)
 
 `echo "https://discord.com/app" | rbmenu -in "Discord"`
 > Scripts working with `dmenu` or `rofi` would be published soon.
