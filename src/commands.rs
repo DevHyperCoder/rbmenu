@@ -2,6 +2,7 @@ use super::config::Config;
 use super::data::{Bookmark, Data};
 
 use regex::Regex;
+use std::process;
 
 /// Insert commands
 /// Adds the bookmark to the data list and increments the last id
@@ -37,6 +38,27 @@ pub fn list(data: Data, config: Config) {
     }
 
     print_bookmark(&search_results);
+}
+
+/// Remove command
+/// Exits if bookmark with the said id is not available
+/// Remove the bookmark with the given id and exit.
+pub fn remove(data: &mut Data, index: u32) {
+    // Loop through bookmarks using a index so we can remove it later.
+    for i in 0..data.bookmarks.len() {
+        let bookmark = &data.bookmarks[i];
+
+        // Continue if its not the one we want
+        if bookmark.id != index {
+            continue;
+        }
+
+        data.bookmarks.remove(i);
+        data.write_to_file();
+        return;
+    }
+    eprintln!("Bookmark with id = {} was not found!", index);
+    process::exit(1);
 }
 
 /// Print all bookmarks in the vector (in color)

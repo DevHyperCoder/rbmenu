@@ -17,4 +17,8 @@ pub struct Config {
     ///Name of bookmark ; Required for -i or -l
     #[structopt(short, long)]
     pub name: Option<String>,
+
+    ///Remove a bookmark with the given id
+    #[structopt(short, long)]
+    pub remove: Option<u32>,
 }

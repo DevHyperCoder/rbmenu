@@ -40,6 +40,9 @@ Name of the bookmark. Required for
 Optional argument to
 .B \-l
 for regex matching. If the value contains spaces, it is converted to underscores. 
+.TP
+.B \-r
+Remove bookmark with the given id. Exits if bookmark with the given id is not found.
 .SH USAGE
 .TP
 .B echo 'https://github.com' | rbmenu -in 'github'
@@ -53,6 +56,9 @@ Displays all the bookmarks saved in a "space" seperated value. This allows for e
 .TP
 .B rbmenu -ln 'git*'
 Displays all the bookmarks that match the given regular expression pattern.
+.TP
+.B rbemnu -r 1
+Removes the bookmark with id = 1
 .SH FILES
 .TP
 .B ~/.local/share/rbmenu/bookmark.json

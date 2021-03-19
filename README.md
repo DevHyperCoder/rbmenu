@@ -5,6 +5,7 @@ Rust Bookmark (d)Menu is a dmenu/ncurses based interface to manage bookmarks ind
 ## Features
 - Insert Bookmark
 - List Bookmark(s) \[With coloured output]
+- Remove Bookmark
 
 ## FAQ
 **Location of Bookmark file ?**
@@ -52,6 +53,11 @@ Yes, more features are on the way. Some planned ones are, copy to clipboard, mod
 Without the name option, `rbmenu -l` displays all the available bookmarks. Give a regex string to the `-n` flag to filter out the bookmarks
 
 `rbmenu -ln "git*"` 
+
+**Remove Bookmark**
+
+Use the `-r` option with a valid unsigned integer (+ve only) to delete the bookmark with the specific id.
+`rbmenu -r 1` 
 
 ## License
 

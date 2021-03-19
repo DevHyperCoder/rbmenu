@@ -3,7 +3,7 @@ mod config;
 mod data;
 mod parser;
 
-use commands::{insert, list};
+use commands::{insert, list, remove};
 use config::Config;
 use data::read_data_file;
 
@@ -13,7 +13,7 @@ use structopt::StructOpt;
 /// Call command functions based on given options
 pub fn run() {
     let opts = Config::from_args();
-    let data = read_data_file();
+    let mut data = read_data_file();
 
     // Run based on options
     if opts.insert {
@@ -25,5 +25,7 @@ pub fn run() {
         insert(input_url, data, opts);
     } else if opts.list {
         list(data, opts);
+    } else if opts.remove.is_some() {
+        remove(&mut data, opts.remove.unwrap());
     }
 }
