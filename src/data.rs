@@ -21,29 +21,29 @@ impl Bookmark {
     /// Generate a suitable name for Bookmark
     /// If name is empty or not provided, link is parsed to get the domain name.
     /// If name contains spaces, it is converted to underscores
-    pub fn generate_name(link: &String, name: Option<String>) -> String {
-        let mut name = name.unwrap_or("".to_owned());
+    pub fn generate_name(link: &str, name: Option<String>) -> String {
+        let mut name = name.unwrap_or_else(|| "".to_owned());
 
         // If name is not provided, use the domain name
         // If provided, replace ' ' with '_'
-        if name == "" {
+        if name.is_empty() {
             let m = get_domain_name(&link);
             name = link.substring(m.start(), m.end()).to_owned();
         } else {
             name = name.replace(' ', "_");
         }
 
-        return name;
+        name
     }
 
     /// Return bookmark with values
     pub fn generate_bookmark(id: u32, link: String, name: String) -> Bookmark {
         Bookmark {
             is_file: !is_url(&link),
-            link: link,
-            name: name,
+            link,
+            name,
             date: Local::now().to_string(),
-            id: id,
+            id,
         }
     }
 

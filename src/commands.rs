@@ -20,10 +20,10 @@ pub fn insert(input: String, mut data: Data, config: Config) {
 /// List all the bookmarks if no name flag was provided
 /// List bookmarks that match the regex provided in name flag
 pub fn list(data: Data, config: Config) {
-    let name = config.name.unwrap_or("".to_owned());
+    let name = config.name.unwrap_or_else(|| "".to_owned());
 
     // No input
-    if name.len() == 0 {
+    if name.is_empty() {
         print_bookmark(&data.bookmarks);
         return;
     }
@@ -62,7 +62,7 @@ pub fn remove(data: &mut Data, index: u32) {
 }
 
 /// Print all bookmarks in the vector (in color)
-fn print_bookmark(input: &Vec<Bookmark>) {
+fn print_bookmark(input: &[Bookmark]) {
     for i in input {
         i.colored_fmt();
     }
