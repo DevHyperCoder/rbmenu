@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# i -> insert
+# l -> list
+
+i () {
+    shift
+    xclip -o clipboard | rbmenu -i "$@"
+}
+
+l () {
+    shift
+    rbmenu -l "$@" | awk '{ print $2 }' | xclip -selection clipboard
+}
+
+"$1" "$@"
