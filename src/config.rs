@@ -4,7 +4,7 @@ use structopt::StructOpt;
 pub struct Config {
     ///Insert a new bookmark.
     #[structopt(short)]
-    pub insert: Option<Option<String>>,
+    pub insert: Option<String>,
 
     ///List all  bookmarks.
     #[structopt(short)]

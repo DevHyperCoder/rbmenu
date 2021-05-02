@@ -9,6 +9,8 @@ rbmenu \- Rust Bookmark (d)Menu
 .IR name ]
 .RB [ \-l
 .IR list ]
+.RB [ \-r
+.IR remove ]
 .SH DESCRIPTION
 .B rbmenu 
 is a bookmark menu written in rust. It stores the bookmarks in json format.
@@ -21,7 +23,7 @@ Print version information
 Print help information
 .TP
 .B \-i
-Insert a new bookmark. Reads stdin for the link and uses the value of
+Insert a new bookmark. Uses the value of
 .B \-n
 (if available) for name of the bookmark. If 
 .B \-n
@@ -45,11 +47,11 @@ for regex matching. If the value contains spaces, it is converted to underscores
 Remove bookmark with the given id. Exits if bookmark with the given id is not found.
 .SH USAGE
 .TP
-.B echo 'https://github.com' | rbmenu -in 'github'
+.B rbmenu -i 'https://devhypercoder.com' -n 'website'
 Adds a bookmark with name 
-.IR github
+.IR website
 and link
-.IR https://github.com
+.IR https://devhypercoder.com
 .TP 
 .B rbmenu -l 
 Displays all the bookmarks saved in a "space" seperated value. This allows for easy scripting using awk, sed etc. Names are in underscores always.
