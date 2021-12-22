@@ -2,23 +2,30 @@ use structopt::StructOpt;
 
 #[derive(StructOpt, Debug)]
 pub struct Config {
-    ///Insert a new bookmark.
-    #[structopt(short)]
-    pub insert: Option<String>,
-
-    ///List all  bookmarks.
-    #[structopt(short)]
-    pub list: bool,
+    #[structopt(subcommand)]
+    pub sub_cmd: SubOpt,
 
     ///Add verbosity to output
     #[structopt(long)]
     pub verbose: bool,
+}
 
-    ///Name of bookmark ; Required for -i or -l
-    #[structopt(short, long)]
-    pub name: Option<String>,
-
-    ///Remove a bookmark with the given id
-    #[structopt(short, long)]
-    pub remove: Option<u32>,
+#[derive(Debug, StructOpt)]
+pub enum SubOpt {
+    Insert {
+        #[structopt(long, short)]
+        name: Option<String>,
+        #[structopt(long, short)]
+        url: String,
+    },
+    Remove {
+        #[structopt(long, short)]
+        id: Option<u32>,
+        #[structopt(long, short)]
+        name: Option<String>,
+    },
+    List {
+        #[structopt(long, short)]
+        name: Option<String>,
+    },
 }

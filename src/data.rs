@@ -8,7 +8,7 @@ use substring::Substring;
 
 use super::parser::{get_domain_name, is_url};
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Bookmark {
     pub is_file: bool,
     pub link: String,
@@ -27,7 +27,7 @@ impl Bookmark {
         // If name is not provided, use the domain name
         // If provided, replace ' ' with '_'
         if name.is_empty() {
-            let m = get_domain_name(&link);
+            let m = get_domain_name(link);
             name = link.substring(m.start(), m.end()).to_owned();
         } else {
             name = name.replace(' ', "_");
@@ -82,6 +82,40 @@ impl Data {
         )
         .unwrap();
     }
+
+    //pub fn remove_with_id(&mut self, id: u32) -> Vec<&Bookmark> {
+    //let to_remove = vec![];
+    //for (i, b) in self.bookmarks.iter().enumerate() {
+    //if b.id == id {
+    //to_remove.push(b);
+    //self.bookmarks.remove(i);
+    //}
+    //}
+    //to_remove
+    //}
+
+    //pub fn remove_with_regex_name(&mut self, name: String) -> Vec<&Bookmark> {
+    //let re = Regex::new(&name).unwrap();
+    //let mut to_remove = vec![];
+    //for (i, b) in self.bookmarks.iter().enumerate() {
+    //if re.is_match(&b.name) {
+    //to_remove.push(b);
+    //self.bookmarks.remove(i);
+    //}
+    //}
+    //to_remove
+    //}
+
+    //pub fn filter_with_name(&self, name: &String) -> Vec<&Bookmark> {
+    //let re = Regex::new(&name).unwrap();
+    //let mut filtered = vec![];
+    //for i in &self.bookmarks {
+    //if re.is_match(&name) {
+    //filtered.push(i)
+    //}
+    //}
+    //filtered
+    //}
 }
 
 /// Create data directory and data file.data
@@ -124,3 +158,10 @@ pub fn get_data_file_path() -> std::path::PathBuf {
         .unwrap()
         .join(".local/share/rbmenu/bookmark.json")
 }
+
+// Print all bookmarks in the vector (in color)
+//pub fn print_bookmark(bookmarks: Vec<Bookmark>) {
+//for i in bookmarks {
+//i.colored_fmt();
+//}
+//}
