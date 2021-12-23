@@ -1,5 +1,7 @@
 use structopt::StructOpt;
 
+use crate::bookmark_query::BookmarkQuery;
+
 #[derive(StructOpt, Debug)]
 pub struct Config {
     #[structopt(subcommand)]
@@ -18,14 +20,14 @@ pub enum SubOpt {
         #[structopt(long, short)]
         url: String,
     },
+    #[structopt(alias = "rm")]
     Remove {
-        #[structopt(long, short)]
-        id: Option<u32>,
-        #[structopt(long, short)]
-        name: Option<String>,
+        #[structopt(flatten)]
+        query: BookmarkQuery
     },
+    #[structopt(alias = "ls")]
     List {
-        #[structopt(long, short)]
-        name: Option<String>,
+        #[structopt(flatten)]
+        query: BookmarkQuery
     },
 }

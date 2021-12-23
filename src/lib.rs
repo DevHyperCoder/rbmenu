@@ -1,3 +1,5 @@
+mod bookmark;
+mod bookmark_query;
 mod commands;
 mod config;
 mod data;
@@ -16,11 +18,20 @@ pub fn run() {
 
     match opts.sub_cmd {
         SubOpt::Insert { name, url } => insert(url, data, name),
-        SubOpt::Remove { id, name } => {
-            remove(&mut data, id, name);
+        SubOpt::Remove {query} => {
+            println!("{:?}",query);
+            let removed = remove(&mut data, query);
+            if removed.is_empty() {
+                println!("Nothing to remove!");
+                return;
+            }
+            println!("Removed: ");
+            for i in removed {
+                i.colored_fmt()
+            }
         }
-        SubOpt::List { name } => {
-            let listed = list(data, name);
+        SubOpt::List {query} => {
+            let listed = list(&data, query);
             for i in listed {
                 i.colored_fmt()
             }

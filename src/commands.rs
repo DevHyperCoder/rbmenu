@@ -1,14 +1,12 @@
-use super::data::{Bookmark, Data};
-use regex::Regex;
+use crate::{data::Data,bookmark::Bookmark, bookmark_query::BookmarkQuery};
 
 /// Insert commands
 /// Adds the bookmark to the data list and increments the last id
-pub fn insert(input: String, mut data: Data, name: Option<String>) {
-    let name = Bookmark::generate_name(&input, name);
+pub fn insert(url: String, mut data: Data, name: Option<String>) {
+    let name = Bookmark::generate_name(&url, name);
 
-    let bookmark = Bookmark::generate_bookmark(data.last_id + 1, input, name);
-    data.bookmarks.push(bookmark);
-    data.last_id += 1;
+    let bookmark = Bookmark::generate_bookmark(data.last_id + 1, url, name);
+    data.add_new_bookmark(bookmark);
 
     data.write_to_file();
 }
@@ -16,52 +14,43 @@ pub fn insert(input: String, mut data: Data, name: Option<String>) {
 /// List command
 /// List all the bookmarks if no name flag was provided
 /// List bookmarks that match the regex provided in name flag
-pub fn list(data: Data, name: Option<String>) -> Vec<Bookmark> {
-    let name = name.unwrap_or_else(|| "".to_owned());
+pub fn list(data: &Data, query:BookmarkQuery) -> Vec<&Bookmark> {
+    let id = query.id;
+    let name = query.name;
 
-    // No input
-    if name.is_empty() {
-        data.bookmarks
-    } else {
-        let mut search_results = vec![];
-
-        // Match Regex
-        for i in data.bookmarks {
-            if Regex::new(&name).unwrap().is_match(&i.name) {
-                search_results.push(i);
-            }
+    if let Some(id) = id {
+        if let Some(b) = data.get_bookmark(id) {
+            return vec![b]
         }
-        search_results
+
+        return vec![]
     }
+    let name = name.unwrap_or_else(|| "".to_owned());
+    data.filter_bookmark(name)
 }
 
 /// Remove command
 /// Exits if bookmark with the said id is not available
 /// Remove the bookmark with the given id and exit.
-pub fn remove(data: &mut Data, index: Option<u32>, _name: Option<String>) {
-    // Loop through bookmarks using a index so we can remove it later.
-    for i in 0..data.bookmarks.len() {
-        let bookmark = &data.bookmarks[i];
+pub fn remove(data: &mut Data, query:BookmarkQuery) -> Vec<Bookmark> {
+    let id = query.id;
+    let name = query.name;
 
-        if let Some(index) = index {
-            if index == bookmark.id {
-                data.bookmarks.remove(i);
-            }
+    let mut removed = vec![];
+
+    if let Some(name) = name {
+        let i = data.remove_with_regex_name(name);
+        for a in i {
+            removed.push(a);
         }
+    };
+    if let Some(id) = id {
+        let i = data.remove_with_id(id);
+        for a in i {
+            removed.push(a);
+        }
+    };
 
-        //if name.is_some() {
-        //// TODO FIX
-        //if name.as_ref().unwrap() == &bookmark.name {
-        //data.bookmarks.remove(i);
-        //}
-        //}
-    }
     data.write_to_file();
+    removed
 }
-
-// Print all bookmarks in the vector (in color)
-//fn print_bookmark(input: Vec<&Bookmark>) {
-//for i in input {
-//i.colored_fmt();
-//}
-//}
