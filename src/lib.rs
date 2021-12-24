@@ -19,7 +19,6 @@ pub fn run() {
     match opts.sub_cmd {
         SubOpt::Insert { name, url } => insert(url, data, name),
         SubOpt::Remove {query} => {
-            println!("{:?}",query);
             let removed = remove(&mut data, query);
             if removed.is_empty() {
                 println!("Nothing to remove!");
