@@ -1,6 +1,6 @@
 [package]
 name = "rbmenu"
-version = "0.5.0"
+version = "0.5.1"
 authors = ["DevHyperCoder <arduinoleo88@gmail.com>"]
 edition = "2018"
 description = "Rust Bookmark (d)Menu"
