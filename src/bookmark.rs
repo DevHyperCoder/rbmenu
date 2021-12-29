@@ -27,7 +27,7 @@ impl Bookmark {
             let m = get_domain_name(link);
             name = match m {
                 Some(m) => link.substring(m.start(), m.end()).to_owned(),
-                None => name,
+                None => link.to_string(),
             }
         } else {
             name = name.replace(' ', "_");
