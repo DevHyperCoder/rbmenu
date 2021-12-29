@@ -23,11 +23,11 @@ pub enum SubOpt {
     #[structopt(alias = "rm")]
     Remove {
         #[structopt(flatten)]
-        query: BookmarkQuery
+        query: BookmarkQuery,
     },
     #[structopt(alias = "ls")]
     List {
         #[structopt(flatten)]
-        query: BookmarkQuery
+        query: BookmarkQuery,
     },
 }

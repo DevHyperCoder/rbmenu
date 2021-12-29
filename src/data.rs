@@ -1,11 +1,14 @@
 use home::home_dir;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
-use std::fs;
+use std::{fs, path::PathBuf};
 
-use crate::bookmark::Bookmark;
+use crate::{
+    bookmark::Bookmark,
+    error::{Error, Result},
+};
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Data {
     pub bookmarks: Vec<Bookmark>,
     pub last_id: u32,
@@ -13,12 +16,19 @@ pub struct Data {
 
 impl Data {
     /// Prettify the json and write to file
-    pub fn write_to_file(&self) {
-        fs::write(
-            get_data_file_path(),
-            serde_json::to_string_pretty(&self).unwrap(),
-        )
-        .unwrap();
+    pub fn write_to_file(&self) -> Result<()> {
+        let path = get_data_file_path()?;
+
+        let pretty = match serde_json::to_string_pretty(&self) {
+            Ok(e) => e,
+            Err(_) => return Err(Error::JsonPrettify),
+        };
+
+        if fs::write(path, pretty).is_err() {
+            Err(Error::DataFileWrite)
+        } else {
+            Ok(())
+        }
     }
 
     pub fn add_new_bookmark(&mut self, bookmark: Bookmark) {
@@ -38,31 +48,33 @@ impl Data {
         bookmark
     }
 
-    pub fn filter_bookmark(&self, name: String) -> Vec<&Bookmark> {
-        self.bookmarks
-            .iter()
-            .filter(|b| Regex::new(&name).unwrap().is_match(&b.name))
-            .collect::<Vec<&Bookmark>>()
+    pub fn filter_bookmark(&self, name: String) -> Result<Vec<&Bookmark>> {
+        let r = Regex::new(&name)?;
 
+        Ok(self
+            .bookmarks
+            .iter()
+            .filter(|b| r.is_match(&b.name))
+            .collect::<Vec<&Bookmark>>())
     }
 
-    pub fn remove_with_regex_name(&mut self, name: String) -> Vec<Bookmark> {
-        self
+    pub fn remove_with_regex_name(&mut self, name: String) -> Result<Vec<Bookmark>> {
+        let r = Regex::new(&name)?;
+
+        Ok(self
             .bookmarks
             .clone()
             .into_iter()
             .enumerate()
-            .filter(|(_i, b)| Regex::new(&name).unwrap().is_match(&b.name))
+            .filter(|(_i, b)| r.is_match(&b.name))
             .map(|(i, b)| {
                 self.bookmarks.remove(i);
                 b
             })
-            .collect::<Vec<Bookmark>>()
-
-        
+            .collect::<Vec<Bookmark>>())
     }
 
-    pub fn remove_with_id(&mut self, id: u32) -> Vec<Bookmark> {
+    pub fn remove_with_id(&mut self, id: u32) -> Option<Bookmark> {
         let things_to_remove = &self
             .bookmarks
             .clone()
@@ -75,22 +87,34 @@ impl Data {
             })
             .collect::<Vec<Bookmark>>();
 
-        things_to_remove.clone()
+        if things_to_remove.is_empty() {
+            None
+        } else {
+            Some(things_to_remove[0].clone())
+        }
+    }
+}
+
+pub fn get_home_dir() -> Result<PathBuf> {
+    match home_dir() {
+        None => Err(Error::Home),
+        Some(h) => Ok(h),
     }
 }
 
 /// Create data directory and data file.data
 /// Write a barebones JSON to the data file
-pub fn create_data_file() {
-    let data_dir = home_dir().unwrap().join(".local/share/rbmenu/");
+pub fn create_data_file() -> Result<()> {
+    let home = get_home_dir()?;
+    let data_dir = home.join(".local/share/rbmenu/");
     let data_file = data_dir.join("bookmark.json");
 
-    if !data_dir.exists() {
-        fs::create_dir_all(&data_dir).unwrap();
+    if !data_dir.exists() && fs::create_dir_all(&data_dir).is_err() {
+        return Err(Error::DataDirCreate);
     }
 
-    if !data_file.exists() {
-        fs::File::create(&data_file).unwrap();
+    if !data_file.exists() && fs::File::create(&data_file).is_err() {
+        return Err(Error::DataFileCreate);
     }
 
     let data = Data {
@@ -98,24 +122,29 @@ pub fn create_data_file() {
         last_id: 0,
     };
 
-    fs::write(data_file, serde_json::to_string_pretty(&data).unwrap()).unwrap();
+    data.write_to_file()
 }
 
 /// Read and parse data file into Data struct
-pub fn read_data_file() -> Data {
-    let data_file = get_data_file_path();
+pub fn read_data_file() -> Result<Data> {
+    let data_file = get_data_file_path()?;
 
     if !data_file.exists() {
-        create_data_file();
+        create_data_file()?;
     }
 
-    let content = fs::read_to_string(data_file).expect("asdf");
-    serde_json::from_str(&content).unwrap()
+    let content = match fs::read_to_string(data_file) {
+        Ok(c) => c,
+        Err(_) => return Err(Error::DataFileRead),
+    };
+
+    match serde_json::from_str(&content) {
+        Ok(e) => Ok(e),
+        Err(_) => Err(Error::DataFileParse),
+    }
 }
 
 /// Return data file path
-pub fn get_data_file_path() -> std::path::PathBuf {
-    home_dir()
-        .unwrap()
-        .join(".local/share/rbmenu/bookmark.json")
+pub fn get_data_file_path() -> Result<PathBuf> {
+    Ok(get_home_dir()?.join(".local/share/rbmenu/bookmark.json"))
 }

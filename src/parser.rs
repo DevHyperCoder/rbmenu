@@ -9,7 +9,7 @@ pub fn is_url(input: &str) -> bool {
 
 /// Use regex to get the domain name and subdomains from the given URL
 /// input : link to get the domain and subdomains
-pub fn get_domain_name(input: &str) -> regex::Match {
+pub fn get_domain_name(input: &str) -> Option<regex::Match> {
     let re = Regex::new(r".*://(?:www.)?([^/]+)").unwrap();
-    re.captures(input).unwrap().get(1).unwrap()
+    re.captures(input)?.get(1)
 }

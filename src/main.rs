@@ -1,5 +1,8 @@
 use rbmenu::run;
 
 fn main() {
-    run();
+    if let Err(e) = run() {
+        // TODO
+        println!("{:?}", e);
+    }
 }

@@ -25,7 +25,10 @@ impl Bookmark {
         // If provided, replace ' ' with '_'
         if name.is_empty() {
             let m = get_domain_name(link);
-            name = link.substring(m.start(), m.end()).to_owned();
+            name = match m {
+                Some(m) => link.substring(m.start(), m.end()).to_owned(),
+                None => name,
+            }
         } else {
             name = name.replace(' ', "_");
         }
@@ -63,4 +66,3 @@ impl fmt::Display for Bookmark {
         write!(f, "{} {} {}", self.id, self.name, self.link)
     }
 }
-
