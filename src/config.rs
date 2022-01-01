@@ -1,6 +1,6 @@
 use structopt::StructOpt;
 
-use crate::bookmark_query::BookmarkQuery;
+use crate::bookmark_query::{BookmarkQuery, BookmarkUpdateQuery};
 
 #[derive(StructOpt, Debug)]
 pub struct Config {
@@ -29,5 +29,9 @@ pub enum SubOpt {
     List {
         #[structopt(flatten)]
         query: BookmarkQuery,
+    },
+    Update {
+        #[structopt(flatten)]
+        query: BookmarkUpdateQuery,
     },
 }

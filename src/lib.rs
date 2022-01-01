@@ -6,7 +6,7 @@ pub mod data;
 pub mod error;
 pub mod parser;
 
-use commands::{insert, list, remove};
+use commands::{insert, list, remove, update};
 use config::{Config, SubOpt};
 use data::read_data_file;
 
@@ -37,6 +37,7 @@ pub fn run() -> Result<()> {
                 i.colored_fmt()
             }
         }
+        SubOpt::Update { query } => update(&mut data, query)?,
     }
     Ok(())
 }

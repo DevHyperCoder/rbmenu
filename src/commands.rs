@@ -1,4 +1,9 @@
-use crate::{bookmark::Bookmark, bookmark_query::BookmarkQuery, data::Data, error::Result};
+use crate::{
+    bookmark::Bookmark,
+    bookmark_query::{BookmarkQuery, BookmarkUpdateQuery},
+    data::Data,
+    error::Result,
+};
 
 /// Insert commands
 /// Adds the bookmark to the data list and increments the last id
@@ -52,4 +57,23 @@ pub fn remove(data: &mut Data, query: BookmarkQuery) -> Result<Vec<Bookmark>> {
 
     data.write_to_file()?;
     Ok(removed)
+}
+
+pub fn update(data: &mut Data, query: BookmarkUpdateQuery) -> Result<()> {
+    data.bookmarks
+        .iter_mut()
+        .map(|e| {
+            if e.id != query.id {
+                return;
+            }
+
+            let name = query.name.as_ref().unwrap_or(&e.name);
+            let link = query.link.as_ref().unwrap_or(&e.link);
+
+            e.name = name.to_string();
+            e.link = link.to_string();
+        })
+        .for_each(drop);
+
+    data.write_to_file()
 }
