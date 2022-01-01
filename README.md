@@ -2,10 +2,14 @@
 
 Rust Bookmark (d)Menu is a dmenu/ncurses based interface to manage bookmarks independently of your web browser. It also supports file/folder bookmarks
 
+Find a TUI version of RBMenu [here](https://github.com/DevHyperCoder/rbmenu-tui)
+
 ## Features
 - Insert Bookmark
 - List Bookmark(s) \[With coloured output]
 - Remove Bookmark
+- Edit Bookmarks
+- Copy to clipboard (Available on [rbmenu-tui](https://github.com/DevHyperCoder/rbmenu-tui))
 
 ## FAQ
 **Location of Bookmark file ?**
@@ -15,7 +19,7 @@ The Bookmark file for `rbmenu` is stored in `~/.local/share/rbmenu/`
 The Bookmark file is stored in `json` format.
 
 **More features ?**
-Yes, more features are on the way. Some planned ones are, copy to clipboard, modify bookmarks and so on.
+Yes, more features are on the way. Some planned ones are, groups for bookmarks
 
 ## Installation
 `rbmenu` is available on [crates.io](https://crates.io/crates/rbmenu)
@@ -34,30 +38,47 @@ Yes, more features are on the way. Some planned ones are, copy to clipboard, mod
 | Option / Flags   | Description                |
 | ---------------- | -------------------------- |
 | `-h` `--help`    | Prints help information    |
-| `-i`             | Insert a new bookmark      |
-| `-l`             | List all bookmarks         |
+| `-V`             | Prints version information |
 | `-n` `--name`    | Name of the bookmark       |
-| `-V` `--version` | Prints version information |
+| `-i` `--id`      | Id of the bookmark         |
+| `-u` `--url`     | Url of the bookmark        |
+
+## CLI - Subcommands
+
+| Subcommands      |                            |
+| `list`           | List all bookmarks         |
+| `insert`         | Add new bookmark           |
+| `update`         | Update bookmarks           |
+| `remove`         | List all bookmarks         |
 
 ## Examples
+> Scripts working with `dmenu` or `rofi` would be published soon.
 **Insert a new bookmark**
 
-`rbmenu` reads from `stdin`, therefore, you are able to pipe text into it.
-`-n` is the name of the bookmark. (Not required as if not provided, the domain name is used)
+- `-n` is the name of the bookmark. (Not required as if not provided, the domain name is used)
+- `-u` is the link of the bookmark.
 
-`echo "https://discord.com/app" | rbmenu -in "Discord"`
-> Scripts working with `dmenu` or `rofi` would be published soon.
+`rbmenu insert -u "https://domain.com" -n "Name"`
 
 **List bookmarks**
 
-Without the name option, `rbmenu -l` displays all the available bookmarks. Give a regex string to the `-n` flag to filter out the bookmarks
+Without the name option, `rbmenu list` displays all the available bookmarks. Give a regex string to the `-n` flag to filter out the bookmarks
 
-`rbmenu -ln "git*"` 
+- `-n` is the name of the bookmark.
+- `-i` is the id of the bookmark.
+
+`rbmenu list -n "git*"` 
 
 **Remove Bookmark**
 
-Use the `-r` option with a valid unsigned integer (+ve only) to delete the bookmark with the specific id.
-`rbmenu -r 1` 
+- `-n` is the name of the bookmark.
+- `-i` is the id of the bookmark.
+
+**Update Bookmark**
+
+- `-n` is the name of the bookmark.
+- `-u` is the link of the bookmark.
+- `-i` is the id of the bookmark. REQUIRED
 
 ## License
 

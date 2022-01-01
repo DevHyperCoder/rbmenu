@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# DOES NOT WORK. 
+# Functionality available in rbmenu-tui
+
 # i -> insert
 # l -> list
 

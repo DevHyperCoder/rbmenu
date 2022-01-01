@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# DOES NOT WORK.
+# WIP
+
 # rbmenu_dmenu - wrapper around rbmenu to interface with dmenu
 # runs `rbmenu -l` 
 
