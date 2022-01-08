@@ -49,10 +49,14 @@ pub fn run() -> Result<()> {
                 i.colored_fmt()
             }
         }
-        SubOpt::List { query } => {
+        SubOpt::List { query, show_link } => {
             let listed = list(&data, query)?;
             for i in listed {
-                i.colored_fmt()
+                if show_link {
+                    println!("{}", i.link);
+                } else {
+                    i.colored_fmt()
+                }
             }
         }
         SubOpt::Update { query } => update(&mut data, query)?,

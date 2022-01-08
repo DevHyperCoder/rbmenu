@@ -35,13 +35,14 @@ Yes, more features are on the way. Some planned ones are, groups for bookmarks
 
 ## CLI - Options
 
-| Option / Flags   | Description                |
-| ---------------- | -------------------------- |
-| `-h` `--help`    | Prints help information    |
-| `-V`             | Prints version information |
-| `-n` `--name`    | Name of the bookmark       |
-| `-i` `--id`      | Id of the bookmark         |
-| `-u` `--url`     | Url of the bookmark        |
+| Option / Flags     | Description                |
+| ------------------ | -------------------------- |
+| `-h` `--help`      | Prints help information    |
+| `-V`               | Prints version information |
+| `-n` `--name`      | Name of the bookmark       |
+| `-i` `--id`        | Id of the bookmark         |
+| `-u` `--url`       | Url of the bookmark        |
+| `-l` `--show-link` | Show link of the bookmark  |
 
 ## CLI - Subcommands
 
@@ -68,6 +69,10 @@ Without the name option, `rbmenu list` displays all the available bookmarks. Giv
 - `-i` is the id of the bookmark.
 
 `rbmenu list -n "git*"` 
+
+To just get the link of a bookmark, use the `-l` option.
+
+`rbmenu list -n "git*" -l` will return just the links of the bookmarks.
 
 **Remove Bookmark**
 

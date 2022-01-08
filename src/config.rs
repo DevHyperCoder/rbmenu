@@ -45,6 +45,10 @@ pub enum SubOpt {
     },
     #[structopt(alias = "ls")]
     List {
+        /// Show only the link of the bookmark
+        #[structopt(global = true, short = "l", long = "show-link")]
+        show_link: bool,
+
         #[structopt(flatten)]
         query: BookmarkQuery,
     },
