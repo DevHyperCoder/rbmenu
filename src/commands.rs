@@ -88,7 +88,7 @@ pub fn update(data: &mut Data, query: BookmarkUpdateQuery) -> Result<()> {
             let name = query.name.as_ref().unwrap_or(&e.name);
             let link = query.link.as_ref().unwrap_or(&e.link);
 
-            e.name = name.to_string();
+            e.name = name.to_string().replace(' ', "_");
             e.link = link.to_string();
         })
         .for_each(drop);
